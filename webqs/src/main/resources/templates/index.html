@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- 路径/文件名称::模块名称 -->
+<header th:replace="/common/header::header"></header>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+   <div th:replace="/common/header::ui-nav"></div>
+   <div th:replace="/common/header::ui-side"></div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+        	内容主体区域
+        </div>
+    </div>
+	<div th:replace="/common/footer::footer-content"></div>
+</div>
+</body>
+<div th:replace="/common/footer :: footer"></div>
+</html>

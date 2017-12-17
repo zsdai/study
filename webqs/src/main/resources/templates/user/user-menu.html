@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="user-menu" class="layui-tab layui-tab-brief" >
+  <ul class="layui-tab-title">
+    	<li class="layui-this"><a href="/list" th:href="@{/list}">用户列表</a></li>
+		<!-- class="layui-this" -->
+		<li><a href="/toAdd" th:href="@{/toAdd}">用户添加</a></li>
+		<li>权限分配</li>
+  </ul>
+  <div class="layui-tab-content"></div>
+</div>
+</html>
