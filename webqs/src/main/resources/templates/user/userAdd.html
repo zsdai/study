@@ -11,12 +11,12 @@
 			<div style="padding: 15px;">
 				<div class="layui-tab layui-tab-brief">
 					<ul class="layui-tab-title">
-						<a href="/list" th:href="@{/list}"><li >用户列表</li></a>
-						<a href="/toAdd" th:href="@{/toAdd}"><li class="layui-this">用户添加</li></a>
+						<a href="/user/list" th:href="@{/user/page}"><li >用户列表</li></a>
+						<a href="/user/toAdd" th:href="@{/user/toAdd}"><li class="layui-this">用户添加</li></a>
 						<li>权限分配</li>
 					</ul>
 					<div class="layui-tab-content">
-						<form class="layui-form" th:action="@{/add}" method="post">
+						<form class="layui-form" th:action="@{/user/add}" method="post">
 							<div class="layui-form-item">
 								<label class="layui-form-label">输入框</label>
 								<div class="layui-input-block">
@@ -40,7 +40,6 @@
 										name="age" id="age" placeholder="age" />
 								</div>
 							</div>
-
 
 							<div class="layui-form-item">
 								<div class="layui-input-block">

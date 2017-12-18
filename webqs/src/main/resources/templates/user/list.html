@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="url='/user/page'">
 <!-- 路径/文件名称::模块名称 -->
 <header th:replace="/common/header::header"></header>
+<div th:replace="/common/footer :: footer"></div>
 <body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
 		<div th:replace="/common/header::ui-nav"></div>
@@ -12,8 +13,8 @@
 
 				<div class="layui-tab layui-tab-brief">
 					<ul class="layui-tab-title">
-						<a href="/list" th:href="@{/list}"><li class="layui-this">用户列表</li></a>
-						<a href="/toAdd" th:href="@{/toAdd}"><li>用户添加</li></a>
+						<a href="/list" th:href="@{/user/page}"><li class="layui-this">用户列表</li></a>
+						<a href="/toAdd" th:href="@{/user/toAdd}"><li>用户添加</li></a>
 						<li>权限分配</li>
 					</ul>
 					<div class="layui-tab-content">
@@ -25,7 +26,7 @@
 							</colgroup>
 							<thead>
 								<tr>
-									<th>#</th>
+									<th>ID</th>
 									<th>User Name</th>
 									<th>Password</th>
 									<th>Age</th>
@@ -34,28 +35,31 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="user : ${users}">
+								<!-- jpa -->
+								<tr th:each="user : ${page.content}">
+								<!-- mybatis -->
+								<!-- <tr th:each="user : ${page.list}"> -->
 									<th scope="row" th:text="${user.id}">1</th>
-									<td th:text="${user.userName}">neo</td>
-									<td th:text="${user.password}">Otto</td>
+									<td th:text="${user.userName}">zsdai</td>
+									<td th:text="${user.password}">123456</td>
 									<td th:text="${user.age}">6</td>
 									<td><a class="layui-btn layui-btn-sm"
-										th:href="@{/toEdit(id=${user.id})}">修改</a></td>
+										th:href="@{/user/toEdit(id=${user.id})}">修改</a></td>
 									<td><a class="layui-btn layui-btn-sm"
-										th:href="@{/delete(id=${user.id})}">删除</a></td>
+										th:href="@{/user/delete(id=${user.id})}">删除</a></td>
 								</tr>
 							</tbody>
 						</table>
-						<a href="/toAdd" th:href="@{/toAdd}" class="layui-btn">add</a>
-
+						<!-- jpa -->
+						<div th:replace="/common/page :: page-jpa(${url})"></div>
+						<!-- mybatis -->
+						<!-- <div th:replace="/common/page :: page-mybatis('/user/page_mybatis')"></div> -->
 					</div>
 				</div>
-
-
 			</div>
 		</div>
 		<div th:replace="/common/footer::footer-content"></div>
 	</div>
 </body>
-<div th:replace="/common/footer :: footer"></div>
+
 </html>

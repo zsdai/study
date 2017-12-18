@@ -1,44 +1,68 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>user</title>
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"></link>
-</head>
-<body class="container">
-<br/>
-<h1>修改用户</h1>
-<br/><br/>
-<div class="with:80%">
-    <form class="form-horizontal"   th:action="@{/edit}" th:object="${user}"  method="post">
-        <input type="hidden" name="id" th:value="*{id}" />
-        <div class="form-group">
-            <label for="userName" class="col-sm-2 control-label">userName</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="userName"  id="userName" th:value="*{userName}" placeholder="userName"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-2 control-label" >Password</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" name="password" id="password"  th:value="*{password}" placeholder="Password"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="age" class="col-sm-2 control-label">age</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="age"  id="age" th:value="*{age}" placeholder="age"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <input type="submit" value="Submit" class="btn btn-info" />
-                &nbsp; &nbsp; &nbsp;
-                <a href="/toAdd" th:href="@{/list}" class="btn btn-info">Back</a>
-            </div>
+<!-- 路径/文件名称::模块名称 -->
+<header th:replace="/common/header::header"></header>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div th:replace="/common/header::ui-nav"></div>
+		<div th:replace="/common/header::ui-side"></div>
+		<div class="layui-body">
+			<!-- 内容主体区域 -->
+			<div style="padding: 15px;">
+				<div class="layui-tab layui-tab-brief">
+					<ul class="layui-tab-title">
+						<a href="/user/list" th:href="@{/user/page}"><li >用户列表</li></a>
+						<a href="/user/toAdd" th:href="@{/user/toAdd}"><li class="layui-this">用户添加</li></a>
+						<li>权限分配</li>
+					</ul>
+					<div class="layui-tab-content">
+						<form class="form-horizontal"   th:action="@{/user/edit}" th:object="${user}"  method="post">
+						<input type="hidden" name="id" th:value="*{id}" />
+							<div class="layui-form-item">
+								<label class="layui-form-label">输入框</label>
+								<div class="layui-input-block">
+									<input type="text" autocomplete="off" class="layui-input"
+										name="userName" id="userName" placeholder="userName" 
+										th:value="*{userName}"
+										/>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">密码框</label>
+								<div class="layui-input-inline">
+									<input type="password" autocomplete="off" class="layui-input"
+										name="password" id="password" placeholder="Password"
+										th:value="*{password}"
+										 />
+								</div>
+								<div class="layui-form-mid layui-word-aux">辅助文字</div>
+							</div>
 
-        </div>
-    </form>
-</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">输入年龄</label>
+								<div class="layui-input-block">
+									<input type="text" autocomplete="off" class="layui-input"
+										name="age" id="age" placeholder="age"
+										th:value="*{age}"
+										 />
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<div class="layui-input-block">
+									<input type="submit" class="layui-btn" value="提交"/>
+                					<a href="/user/list" th:href="@{/user/list}" class="layui-btn layui-btn-primary">Back</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div th:replace="/common/footer::footer-content"></div>
+	</div>
 </body>
+<div th:replace="/common/footer :: footer"></div>
 </html>
+
