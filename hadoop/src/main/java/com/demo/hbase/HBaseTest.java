@@ -18,6 +18,10 @@ import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.filter.CompareFilter;
+import org.apache.hadoop.hbase.filter.FilterList;
+import org.apache.hadoop.hbase.filter.RegexStringComparator;
+import org.apache.hadoop.hbase.filter.RowFilter;
 import org.apache.hadoop.hbase.util.Bytes;
 
 public class HBaseTest {
@@ -41,7 +45,7 @@ public class HBaseTest {
 
 	public static void main(String[] args) throws Exception {
 		HBaseTest hBaseTest = new HBaseTest();
-		hBaseTest.createTable("warn_log", "cf");
+		//hBaseTest.createTable("warn_log", "cf");
 		// hBaseTest.deleteTable("javatest1");
 		// hBaseTest.getALLTables();
 		//hBaseTest.addOneRecord("javatest", "key1", "cf", "age", "24");
@@ -50,8 +54,60 @@ public class HBaseTest {
 		 //hBaseTest.getResultByColumn("javatest", "key1", "cf", "name");
 		 //hBaseTest.deleteColumn("javatest", "key", "cf", "age");
 		 //hBaseTest.deleteAllColumn("javatest", "key2");
+		hBaseTest.getScan("javatest","cf","age");
+		//hBaseTest.getRowFilter("warn_log","^*_20130313145955\\d*$");
 		System.out.println("执行完毕...");
 
+	}
+
+	/**
+	 * 过滤器
+	 * @param tableName
+	 * @param reg
+	 * @throws Exception
+	 */
+	public void getRowFilter(String tableName,String reg)throws Exception{
+		HTable hTable = new HTable(conf,tableName);
+		Scan scan = new Scan();
+		//多个filter
+		/*FilterList filterList= new FilterList(FilterList.Operator.MUST_PASS_ONE);
+		filterList.addFilter(null);
+		scan.setFilter(filterList);*/
+		//当个filter
+		RowFilter rowFilter= new RowFilter(CompareFilter.CompareOp.EQUAL,new RegexStringComparator(reg));
+		scan.setFilter(rowFilter);
+		ResultScanner scanner= hTable.getScanner(scan);
+		for(Result result:scanner){
+			if(result.raw().length==0){
+				System.out.println(tableName+"数据为空....");
+			}else{
+				for (KeyValue kv: result.raw()){
+					System.out.println(new String(kv.getRow())+" "+new String(kv.getValue()));
+				}
+			}
+		}
+	}
+	/**
+	 * 扫描器
+	 * @param tableName
+	 * @param columnFamily
+	 * @param column
+	 * @throws Exception
+	 */
+	public void getScan(String tableName,String columnFamily,String column)throws Exception{
+		HTable hTable = new HTable(conf,tableName);
+		Scan scan = new Scan();
+		scan.addColumn(columnFamily.getBytes(),column.getBytes());
+		ResultScanner scanner= hTable.getScanner(scan);
+		for(Result result:scanner){
+			if(result.raw().length==0){
+				System.out.println(tableName+"|"+columnFamily+"|"+column+"数据为空....");
+			}else{
+				for (KeyValue kv: result.raw()){
+					System.out.println(new String(kv.getRow())+" "+new String(kv.getValue()));
+				}
+			}
+		}
 	}
     /**
      * 删除某一行键下的所有列
@@ -87,7 +143,7 @@ public class HBaseTest {
      * @param tableName 表名
      * @param rowKey 行键
      * @param falimyName 列族名
-     * @param ColumnName 列名
+     * @param columnName 列名
      * @throws Exception
      */
     public void getResultByColumn(String tableName,String rowKey,
