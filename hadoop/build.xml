@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="项目名称" basedir="." default="sshexec">
+<project name="hbase-test" basedir="" default="sshexec">
 	<description>本配置文件供ANT编译项目、自动进行单元测试、打包并部署之用。</description>
 	<description>默认操作(输入命令：ant)为编译源程序并发布运行。</description>
 
 	<!--属性设置-->
 	<property environment="env" />
-	<property file="build.properties" />
-	<property name="src.dir" value="${basedir}/src" />
+	<property name="src.dir" value="${basedir}/src/main/java/com/demo/hbase" />
 	<property name="java.lib.dir" value="${env.JAVA_HOME}/lib" />
-	<property name="classes.dir" value="${basedir}/classes" />
+	<property name="classes.dir" value="${basedir}/target/classes" />
 	<property name="dist.dir" value="${basedir}/dist" />
-	<property name="third.lib.dir" value="G:\myData\apache\hadoop\hbase\hbase-1.2.6\lib" />
+	<property name="third.lib.dir" value="G:\myData\Hadoop\hbase\hbase-1.2.6\lib" />
 	<property name="localpath.dir" value="${basedir}" />
 	<property name="remote.host" value="192.168.200.100"/>
 	<property name="remote.username" value="root"/>
@@ -19,6 +18,7 @@
 	<property name="remote.home" value="~"/>
 	<!--每次需要知道的main类，写到这里-->
 	<property name="main.class" value="com.demo.hbase.HBaseTest"/>
+	<property name="jar.name" value="hbaseTest"/>
 
 	<!-- 基本编译路径设置 -->
 	<path id="compile.classpath">
@@ -49,25 +49,28 @@
 	</target>
 	<!-- 编译源文件-->
 	<target name="compile" depends="init" description="编译源文件">
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" source="1.7" target="1.7"  includeAntRuntime="false" debug="false" verbose="false">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" source="1.8" target="1.8"  includeAntRuntime="false" debug="false" verbose="false">
 		    <compilerarg line="-encoding UTF-8 "/> 
 			<classpath refid="compile.classpath" />
 		</javac>
 	</target>
 	<!-- 打包类文件 -->
 	<target name="jar" depends="compile" description="打包类文件">
-		<jar jarfile="${dist.dir}/jar.jar">
+		<jar jarfile="${dist.dir}/${jar.name}.jar">
 			<fileset dir="${classes.dir}" includes="**/*.*" />
+			<manifest>
+				<attribute name="Main-class" value="${main.class}" />
+			</manifest>
 		</jar>
 	</target>
 	<!--上传到服务器
 	**需要把lib目录下的jsch-0.1.51拷贝到$ANT_HOME/lib下，如果是Eclipse下的Ant环境必须在Window->Preferences->Ant->Runtime->Classpath中加入jsch-0.1.51。
 	-->
 	<target name="ssh" depends="jar">
-		<scp file="${dist.dir}/jar.jar" todir="${remote.username}@${remote.host}:${remote.home}" password="${remote.password}" trust="true"/>
+		<scp file="${dist.dir}/${jar.name}.jar" todir="${remote.username}@${remote.host}:${remote.home}" password="${remote.password}" trust="true"/>
 	</target>
 	
 	<target name="sshexec" depends="ssh">
-	      <sshexec host="${remote.host}" username="${remote.username}"  password="${remote.password}" trust="true" command="source /etc/profile;hadoop jar ${remote.home}/jar.jar ${main.class}"/>
+	      <sshexec host="${remote.host}" username="${remote.username}"  password="${remote.password}" trust="true" command="source /etc/profile;hadoop jar ${remote.home}/${jar.name}.jar ${main.class}"/>
 	</target>
 </project>

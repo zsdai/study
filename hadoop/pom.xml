@@ -4,6 +4,7 @@
 	<groupId>com.demo</groupId>
 	<artifactId>hadoop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
@@ -26,6 +27,34 @@
 			<groupId>org.apache.hbase</groupId>
 			<artifactId>hbase-client</artifactId>
 			<version>1.2.6</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.hbase/hbase-server -->
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-server</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+
+
+
+		<!-- https://mvnrepository.com/artifact/org.apache.storm/storm-core -->
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-core</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.storm/storm-core -->
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-core</artifactId>
+			<version>0.9.2-incubating</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.storm/storm-kafka -->
+		<dependency>
+			<groupId>org.apache.storm</groupId>
+			<artifactId>storm-kafka</artifactId>
+			<version>1.0.5</version>
 		</dependency>
 
 	</dependencies>
