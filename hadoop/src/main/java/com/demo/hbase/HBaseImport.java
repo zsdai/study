@@ -20,6 +20,10 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 
+/**
+ * 首先创建表
+ * create 'warn_log','cf'
+ */
 public class HBaseImport {
 	static class BatchMapper extends Mapper<LongWritable, Text, LongWritable, Text>{
 	@Override
@@ -63,7 +67,7 @@ public class HBaseImport {
 			}
 		}
 	}
-	private static final String TableName = "waln_log";
+	private static final String TableName = "warn_log";
 	public static void main(String[] args) throws Exception {
 		Configuration conf = HBaseConfiguration.create();
 		conf.set("hbase.rootdir", "hdfs://192.168.200.100:9000/hbase");

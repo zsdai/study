@@ -41,11 +41,11 @@ public class HBaseTest {
 
 	public static void main(String[] args) throws Exception {
 		HBaseTest hBaseTest = new HBaseTest();
-		// hBaseTest.createTable("javatest1", "cf");
+		hBaseTest.createTable("warn_log", "cf");
 		// hBaseTest.deleteTable("javatest1");
 		// hBaseTest.getALLTables();
 		//hBaseTest.addOneRecord("javatest", "key1", "cf", "age", "24");
-		hBaseTest.getKey("javatest", "key1");
+		//hBaseTest.getKey("javatest", "key1");
 		//hBaseTest.getResultScanner("javatest");
 		 //hBaseTest.getResultByColumn("javatest", "key1", "cf", "name");
 		 //hBaseTest.deleteColumn("javatest", "key", "cf", "age");

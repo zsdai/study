@@ -13,12 +13,12 @@
 	<property name="third.lib.dir" value="G:\myData\Hadoop\hbase\hbase-1.2.6\lib" />
 	<property name="localpath.dir" value="${basedir}" />
 	<property name="remote.host" value="192.168.200.100"/>
-	<property name="remote.username" value="root"/>
+	<property name="remote.username" value="hadoop"/>
 	<property name="remote.password" value="123456"/>
 	<property name="remote.home" value="~"/>
 	<!--每次需要知道的main类，写到这里-->
-	<property name="main.class" value="com.demo.hbase.HBaseTest"/>
-	<property name="jar.name" value="hbaseTest"/>
+	<property name="main.class" value="com.demo.hbase.HBaseImport"/>
+	<property name="jar.name" value="HBaseImport"/>
 
 	<!-- 基本编译路径设置 -->
 	<path id="compile.classpath">
